@@ -1,0 +1,100 @@
+﻿@model Pagination<ProductListVM>
+@{
+    ViewData["Title"] = "Products";
+    int count = ((Model.CurrentPage-1)*10)+1;
+}
+
+<div class="container mt-3">
+    <div class="d-flex justify-content-between">
+        <h2>Products</h2>
+        <a class="btn btn-success" asp-action="Create">Create Category</a>
+    </div>
+    <div class="table-responsive pt-3">
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        Product Image
+                    </th>
+                    <th>
+                        Product Name
+                    </th>
+                    <th>
+                        Product Count
+                    </th>
+                    <th>
+                        Product Price
+                    </th>
+                    <th>
+                        Category Name
+                    </th>
+                    <th>
+                        Settings
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model.Datas)
+                {
+                <tr>
+                    <td>
+                        @count
+                    </td>
+                    <td>
+                        <img src="~/img/@product.Image" style="width:150px;height:150px" alt="Alternate Text" />
+                    </td>
+                    <td>
+                        @product.Name
+                    </td>
+                    <td>
+                        @product.Count
+                    </td>
+                    <td>
+                        @product.Price
+                    </td>
+                    <td>
+                        @product.CategoryName
+                    </td>
+                    <td>
+                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@product.Id">Edit</a>
+                        <form style="display:inline-block" method="post" asp-action="Delete" asp-route-id="@product.Id">
+                            <button class="btn btn-danger">Delete</button>
+                        </form>
+                        <a class="btn btn-info" asp-action="Detail" asp-route-id="@product.Id">Detail</a>
+                    </td>
+
+                </tr>
+
+                    count++;
+                }
+
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-center my-4">
+        <nav aria-label="...">
+            <ul class="pagination">
+                <li class="page-item @(Model.HasPrev?"":"disabled")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.CurrentPage-1)">Previous</a>
+                </li>
+                @for (int i = 1; i <= Model.TotalPage; i++)
+                {
+                    <li class="page-item @(i==Model.CurrentPage ? "disabled":"")">
+                         <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                    </li>
+                }
+
+
+                <li class="page-item @(Model.HasNext?"":"disabled")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.CurrentPage+1)">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+

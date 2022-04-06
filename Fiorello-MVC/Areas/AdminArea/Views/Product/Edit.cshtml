@@ -1,0 +1,65 @@
+﻿@model ProductUpdateVM
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="images">
+            @foreach (var item in Model.ProductImages)
+            {
+                <img style="width:100px;height:100px" src="~/img/@item.Name" alt="Alternate Text" />
+                
+            }
+        <button class="btn btn-danger" disabled>Default</button>
+        <button class="btn btn-success">Set Default</button>
+        </div>
+       
+    </div>
+    
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+
+                <form class="forms-sample" method="post" asp-action="Edit" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input type="text" class="form-control" asp-for="Name">
+                        <span class="text-danger" asp-validation-for="Name"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price"></label>
+                        <input type="number" class="form-control" asp-for="Price" step=".01">
+                        <span class="text-danger" asp-validation-for="Price"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Count"></label>
+                        <input type="number" class="form-control" asp-for="Count">
+                        <span class="text-danger" asp-validation-for="Count"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CategoryId">Categories: </label>
+                        <select asp-for="CategoryId" asp-items="@ViewBag.categories">
+                        </select>
+                        <span class="text-danger" asp-validation-for="CategoryId"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Photos"></label>
+                        <input class="form-control" asp-for="Photos">
+                        <span class="text-danger" asp-validation-for="Photos"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary me-2">Submit</button>
+                    <button class="btn btn-light">
+                        <a asp-action="Index">Cancel</a>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
